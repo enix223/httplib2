@@ -1073,7 +1073,13 @@ def proxy_info_from_url(url, method="http", noproxy=None):
     else:
         port = dict(https=443, http=80)[method]
 
-    proxy_type = 3  # socks.PROXY_TYPE_HTTP
+    if url.scheme == 'socks4':
+        proxy_type = 1  # socks.PROXY_TYPE_SOCKS4
+    elif url.scheme == 'socks5':
+        proxy_type = 2  # socks.PROXY_TYPE_SOCKS5
+    else:
+        proxy_type = 3  # socks.PROXY_TYPE_HTTP
+
     pi = ProxyInfo(
         proxy_type=proxy_type,
         proxy_host=host,
